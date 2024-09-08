@@ -4,10 +4,14 @@ from pytubefix.cli import on_progress
 
 class YoutubeVideo:
     """
-    Youtube Class
+    Youtube Class for downloading videos, music etc.
     """
 
-    def __init__(self, url: str = 'https://www.youtube.com/watch?v=jNQXAC9IVRw', path: str = './videos'):
+    def __init__(self, url: str = 'https://www.youtube.com/watch?v=jNQXAC9IVRw', path: str = './'):
+        """
+        :param url: url to Youtube of video or music (str)
+        :param path:  path to save Youtube file (str)
+        """
         self.url = url
         self.save_path = path
 
