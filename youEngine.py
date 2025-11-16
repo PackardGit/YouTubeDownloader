@@ -16,8 +16,9 @@ class YoutubeVideo:
         self.save_path = path
 
         try:
-            self.yt = YouTube(self.url, on_progress_callback=on_progress)
+            self.yt = YouTube(self.url, on_progress_callback=on_progress, use_po_token=False)
             self.title = self.yt.title
+            print(f"Starting download...")
         except Exception as e:
             print(f"Someting Went Wrong. Check url address \n {e}")
 
@@ -25,7 +26,6 @@ class YoutubeVideo:
         try:
             streams = self.yt.streams.filter(progressive=True, file_extension="mp4")
             highest_res_stream = streams.get_highest_resolution()
-            print(f"Starting download...")
             highest_res_stream.download(output_path=self.save_path)
             print(f"Successfully Downloaded Video \"{self.title}\"")
         except Exception as e:
@@ -34,8 +34,10 @@ class YoutubeVideo:
     def download_music(self):
         try:
             streams = self.yt.streams.get_audio_only()
-            print(f"Starting download...")
-            streams.download(mp3=True, output_path=self.save_path)
+            streams.download(output_path=self.save_path)
             print(f"Successfully Downloaded Music \"{self.title}\"")
         except Exception as e:
             print(f"Someting Went Wrong. {e}")
+
+
+
