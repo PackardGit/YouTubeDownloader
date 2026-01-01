@@ -34,7 +34,7 @@ class YouApp(tk.Frame):
         self.buttons_frame.pack(pady=5, fill='x')
         self.download_button = tk.Button(self.buttons_frame, text="Download\n📥", **btn_style, command=self.download)
         self.download_button.pack(side="left", padx=5, expand=True, fill='x')
-        self.convert_button = tk.Button(self.buttons_frame, text="Convert\n🔄", **btn_style, command=self.convert)
+        self.convert_button = tk.Button(self.buttons_frame, text="Convert to MP3\n🔄", **btn_style, command=self.convert)
         self.convert_button.pack(side="left", padx=5, expand=True, fill='x')
 
         self.status = tk.StringVar(value="->")
@@ -73,5 +73,5 @@ class YouApp(tk.Frame):
 
 
 if __name__ == "__main__":
-    a = YouApp()
-    a.mainloop()
+    myApp = YouApp()
+    myApp.mainloop()
