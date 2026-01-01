@@ -3,6 +3,10 @@ import os
 
 
 class MusicConversion:
+    """
+    Format conversion class for music files.
+    For now it supports only conversion .m4a -> .mp3
+    """
     def __init__(self, actual_format: str = '.m4a',
                  music_dir: str = './music_files/downloaded', target_dir: str = './music_files/converted_to_mp3'):
         self.actual_format = actual_format
