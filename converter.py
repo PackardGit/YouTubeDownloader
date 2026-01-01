@@ -1,21 +1,32 @@
 from pydub import AudioSegment
 import os
 
-# AudioSegment.ffmpeg = r"G:\\Python Projects\\YouTubeDownloader\\ffmpeg-8.0-full_build\\bin\\ffmpeg.exe"
-# AudioSegment.ffprobe = r"G:\\Python Projects\\YouTubeDownloader\\ffmpeg-8.0-full_build\\bin\\ffprobe.exe"
-# AudioSegment.converter = r"G:\\Python Projects\\YouTubeDownloader\\ffmpeg-8.0-full_build\\bin\\ffmpeg.exe"
 
-files = os.listdir('./musics_new')
-# for file in files:
-#     file_name = file.split(".")[0]
-#     print(file_name)
-#     AudioSegment.from_file("./musics/"+file).export("./mp3/"+file_name, format="mp3")
+class MusicConversion:
+    def __init__(self, actual_format: str = '.m4a',
+                 music_dir: str = './music_files/downloaded', target_dir: str = './music_files/converted_to_mp3'):
+        self.actual_format = actual_format
+        self.music_dir = music_dir
+        self.target_dir = target_dir
+        self.files = os.listdir(self.music_dir)
 
-m4a_directory = "./musics_new"
-mp3_directory = './mp3/80'
-print("Start converting...")
-for m4a_file in files:
-    audio = AudioSegment.from_file(os.path.join(m4a_directory, m4a_file), format="m4a")
-    audio = audio.set_frame_rate(20000)
-    audio.export(os.path.join(mp3_directory, m4a_file.replace('.m4a', '.mp3')), format="mp3")
-    print("Succesfully converted: " + m4a_file)
+    def to_mp3(self, status_queue):
+        try:
+            msg = "Conversion to .mp3 has started..."
+            print(msg)
+            status_queue.put(msg)
+            for m4a_file in self.files:
+                audio = AudioSegment.from_file(os.path.join(self.music_dir, m4a_file), format="m4a")
+                audio = audio.set_frame_rate(20000)
+                audio.export(os.path.join(self.target_dir, m4a_file.replace(self.actual_format, '.mp3')), format="mp3")
+                msg = "Successfully converted_to_mp3: " + m4a_file
+                status_queue.put(msg)
+                print(msg)
+        except Exception as e:
+            msg = f"Conversion to Mp3 failed. {e}"
+            status_queue.put(msg)
+            print(msg)
+        finally:
+            msg = "Successfully converted all the files!"
+            status_queue.put(msg)
+            print(msg)
