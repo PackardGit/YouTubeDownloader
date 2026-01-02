@@ -26,35 +26,35 @@ class YoutubeDownloader:
     #     except Exception as e:
     #         print(f"Something Went Wrong :( {e}")
 
-    def on_progress(self, stream, chunk, bytes_remaining):
-        pass
-
     def download_music(self, status_queue):
+        msg = "Downloading has started."
+        print(msg)
+        status_queue.put(msg)
         try:
-            msg = "Downloading has started."
-            print(msg)
-            status_queue.put(msg)
             for url in self.urls:
-                yt = YouTube(url)
+                def on_progress(stream, chunk, bytes_remaining):
+                    pass
+
+                yt = YouTube(url, use_po_token=False)
                 yt.register_on_progress_callback(on_progress)
                 title = yt.title
-                streams = yt.streams.get_audio_only()
-                if getattr(self, "_downloading", False):
-                    self._downloading = True
-                    try:
-                        streams.download(output_path=self.save_path)
-                    finally:
-                        self._downloading = False
-                msg = f"Successfully Downloaded Music \"{title}\""
+                stream = yt.streams.get_audio_only()
+
+                if stream is None:
+                    raise RuntimeError("No audio stream found")
+
+                stream.download(output_path=self.save_path)
+                msg = f'Successfully Downloaded Music "{title}"'
                 print(msg)
                 status_queue.put(msg)
 
         except Exception as e:
-            msg = f"Something Went Wrong :( {e}"
+            msg = f"Something went wrong :( {e}"
             print(msg)
             status_queue.put(msg)
+            return
 
         finally:
-            msg = f"Successfully Downloaded All the files"
+            msg = f"Downloaded is finished"
             print(msg)
             status_queue.put(msg)
