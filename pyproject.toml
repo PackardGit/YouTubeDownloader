@@ -1,0 +1,20 @@
+[project]
+name = "youApp"
+version = "0.0.1"
+authors = [
+  { name="AD"},
+]
+description = "Download music from Yt"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = [
+"license.lic"
+]
+
+[project.urls]
+Homepage = "https://github.com/PackardGit/YouTubeDownloader"
