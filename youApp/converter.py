@@ -13,7 +13,6 @@ class MusicConversion:
         self.music_dir = music_dir
         self.target_dir = target_dir
         self.files = os.listdir(self.music_dir)
-        AudioSegment.converter = "C:/ffmpeg/ffmpeg.exe"
 
     def to_mp3(self, status_queue):
         try:
@@ -32,6 +31,6 @@ class MusicConversion:
             status_queue.put(msg)
             print(msg)
         finally:
-            msg = "Successfully converted all the files!"
+            msg = "Conversion operation is completed."
             status_queue.put(msg)
             print(msg)

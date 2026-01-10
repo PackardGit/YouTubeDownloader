@@ -10,7 +10,7 @@ class YoutubeDownloader:
     def __init__(self, urls: tuple = ('https://www.youtube.com/watch?v=jNQXAC9IVRw',),
                  path: str = './music_files/downloaded'):
         """
-        :param url: url to Youtube of video or music (str)
+        :param urls: url to Youtube of video or music (str)
         :param path:  path to save Youtube file (str)
         """
         self.urls = urls
@@ -55,6 +55,6 @@ class YoutubeDownloader:
             return
 
         finally:
-            msg = f"Downloaded is finished"
+            msg = f"Downloading is finished."
             print(msg)
             status_queue.put(msg)
